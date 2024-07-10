@@ -34,6 +34,15 @@ def criarTabela():
     except mysqlConnection as error:
         print(f"Failed to create table in MySQL: {error}")
 
+def inserRegistroEmAdm(nome, email, senha):
+    try:
+        cursor.execute(f'''INSERT INTO administrador (nomeADM, email, senha)
+                        VALUES ('{nome}','{email}' ,'{senha}');   
+                       ''')
+        mysqlConnection.commit()
+
+    except mysqlConnection as error:
+        print(f"Failed to update table in MySQL: {error}")
 
 #Editar
 def editarTabelaUsuario(nomeColuna, novoDado, idUsuario):
@@ -48,9 +57,6 @@ def editarTabelaUsuario(nomeColuna, novoDado, idUsuario):
         
     except mysqlConnection as error:
         print(f"Failed to update table in MySQL: {error}")
-
-
-
 
 #Deletar
 def deletarRegistroTabelaUsuario(idUsuario):
@@ -86,9 +92,7 @@ def mostrarTabelaUsuario():
     except mysqlConnection as error:
         print(f"Failed to read table in MySQL: {error}")
 
-deletarRegistroTabelaUsuario(6)
-
-print(mostrarTabelaUsuario())
+inserRegistroEmAdm('Valdomiro', 'valdo123@gmail.com', 'gab123')
 
 cursor.close()
 
