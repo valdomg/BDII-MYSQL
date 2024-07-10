@@ -8,7 +8,7 @@ app.config ['MYSQL_USER'] = 'VALDEMIRO'
 app.config ['MYSQL_PASSWORD'] = 'valdom'
 app.config ['MYSQL_DB'] = 'lojatech'
 
-mysql = mysql.connector.connect(
+mysqlConnection = mysql.connector.connect(
     host=app.config['MYSQL_HOST'],
     user=app.config['MYSQL_USER'],
     password=app.config['MYSQL_PASSWORD'],
@@ -17,7 +17,7 @@ mysql = mysql.connector.connect(
 
 @app.route('/listar')
 def home():
-    cursor = mysql.cursor()
+    cursor = mysqlConnection.cursor()
     cursor.execute('SELECT * FROM produto')
     data = cursor.fetchall()
     cursor.close()
@@ -26,7 +26,7 @@ def home():
 
 @app.route('/deletarProduto/<int:id>', methods = ['GET'])
 def deletarProduto(id):
-    cursor = mysql.cursor()
+    cursor = mysqlConnection.cursor()
     cursor.execute('DELETE FROM produto WHERE idproduto = %d',(id))
     cursor.close()
 
@@ -40,7 +40,7 @@ def login():
     if request.method == 'POST':
         usuario = request.form ['username']
         senha = request.form['senha']
-        cursor = mysql.cursor()
+        cursor = mysqlConnection.cursor()
         cursor.execute('SELECT * FROM usuario WHERE nome_usuario = %s AND senha = %s', (usuario, senha))
 
         user = cursor.fetchone()
@@ -58,16 +58,20 @@ def login():
 def loginAdm():
 
     if request.method == 'POST':
-        nomeAdm = request.form ['nomeAdm']
+        emailAdm = request.form ['emailAdm']
+        senha = request.form['senha']
 
-        cursor = mysql.cursor()
-        cursor.execute('SELECT user from mysql.user WHERE user =' + 'VALDEMIRO')
+        cursor = mysqlConnection.cursor()
+        cursor.execute(f'''SELECT email, senha 
+                           FROM administrador 
+                           WHERE email = '{emailAdm}' and senha = '{senha}';''')
 
         userAdm = cursor.fetchone()
         cursor.close()
 
         if userAdm:
-            session['nomeAdm'] = userAdm[0][0]
+            session['nomeAdm'] = emailAdm
+            #Provisório, é pra ir numa page separada
             return redirect('/listar')
         else:
             return 'Login Inválido'
