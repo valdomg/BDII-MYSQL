@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PÁGINA DE Login</title>
+</head>
+<body>
+    <h1>Login</h1>
+    <form method="post" action="">
+        Usuário <input type="text" name="username">
+        Senha <input type="text" name="senha">
+        <input type="submit" value="entrada"> 
+        
+    </form>
+
+    <img src="{{url_for('static', filename='goku-dance.gif')}}" alt="" srcset="">
+
+    <H3> LOGIN ADMINISTRADOR</H3>
+    <a href="{{ url_for('loginAdm') }}">ENTRAR</a>
+    
+
+</body>
+</html>
