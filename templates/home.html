@@ -15,7 +15,7 @@
             <td>QUANTIDADE</td>
             <td>OPÇÕES</td>
         </tr>
-        {% for row in data %}
+        {% for row in produtos %}
         <tr>
             <td>{{row[0]}}</td>
             <td>{{row[1]}}</td>
@@ -26,6 +26,7 @@
             <td>
                 <div class="opc-buttons">
                     <a href="{{ url_for('deletarProduto', id=row[0]) }}" id="del">DELETAR</a>
+                    <a href="{{ url_for('editarProduto', id=row[0]) }}" id="edit">EDITAR</a>
                 </div>
             </td>
         </tr>
