@@ -19,20 +19,23 @@ mysqlConnection = mysql.connector.connect(
 def home():
     cursor = mysqlConnection.cursor()
     cursor.execute('SELECT * FROM produto')
-    data = cursor.fetchall()
+    produtos = cursor.fetchall()
     cursor.close()
-    return render_template('home.html', data = data)
+    return render_template('home.html', produtos = produtos)
 
 
 @app.route('/deletarProduto/<int:id>', methods = ['GET'])
 def deletarProduto(id):
     cursor = mysqlConnection.cursor()
-    cursor.execute('DELETE FROM produto WHERE idproduto = %d',(id))
+    cursor.execute(f'DELETE FROM produto WHERE idproduto = {id};')
+    mysqlConnection.commit()
     cursor.close()
 
     return redirect(url_for('home'))
-
-  
+@app.route('/editarProduto/<int:id>', methods = ['GET', 'POST'])
+def editarProduto(id):
+    if request.method == 'GET':
+        return None
 
 @app.route('/', methods = ['GET', 'POST'])
 def login():
