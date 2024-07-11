@@ -1,8 +1,10 @@
 from flask import Flask, render_template, redirect, request, session, url_for
+from flask_bootstrap import Bootstrap4
 
 import mysql.connector
 
 app = Flask (__name__)
+bootstrap = Bootstrap4(app)
 app.config ['MYSQL_HOST'] = 'localhost'
 app.config ['MYSQL_USER'] = 'VALDEMIRO'
 app.config ['MYSQL_PASSWORD'] = 'valdom'
@@ -14,8 +16,11 @@ mysqlConnection = mysql.connector.connect(
     password=app.config['MYSQL_PASSWORD'],
     database=app.config['MYSQL_DB']
     )
+@app.route('/')
+def index():
+    return render_template ('index.html')
 
-@app.route('/listar')
+@app.route('/home')
 def home():
     try:
         cursor = mysqlConnection.cursor()
@@ -65,7 +70,7 @@ def editarProduto(id):
         cursor.close()
         return redirect(url_for('home'))
 
-@app.route('/', methods = ['GET', 'POST'])
+@app.route('/login', methods = ['GET', 'POST'])
 def login():
     
     if request.method == 'POST':
