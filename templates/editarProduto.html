@@ -6,6 +6,24 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>page de edição</h1>
+    <h1>page de edição de produtos</h1>
+    <form method="post" action="/editarProduto/{{produto[0]}}">
+
+        <label for="nomeProduto">Produto</label>
+        <input type="text" id="pnome" name="pnome" value="{{produto[1]}}">
+
+        <label for="nomeMarca">Marca</label>
+        <input type="text" id="pmarca" name="pmarca" value="{{produto[2]}}">
+
+        <label for="valor">Valor</label>
+        <input type="number" id="pvalor" name="pvalor" value="{{produto[3]}}">
+
+        <label for="quantidade">Quantidade</label>
+        <input type="number" id="pqtd" name="pqtd" value="{{produto[4]}}">
+
+        <input type="submit" value="Editar">
+
+    </form>
+
 </body>
 </html>
