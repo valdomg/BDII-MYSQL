@@ -17,10 +17,14 @@ mysqlConnection = mysql.connector.connect(
 
 @app.route('/listar')
 def home():
-    cursor = mysqlConnection.cursor()
-    cursor.execute('SELECT * FROM produto')
-    produtos = cursor.fetchall()
-    cursor.close()
+    try:
+        cursor = mysqlConnection.cursor()
+        cursor.execute('SELECT * FROM produto')
+        produtos = cursor.fetchall()
+        cursor.close()
+    except mysql as error:
+        return f"Failed to acess tables in MySQL: {error}"
+    
     return render_template('home.html', produtos = produtos)
 
 
@@ -32,10 +36,34 @@ def deletarProduto(id):
     cursor.close()
 
     return redirect(url_for('home'))
+
 @app.route('/editarProduto/<int:id>', methods = ['GET', 'POST'])
 def editarProduto(id):
     if request.method == 'GET':
-        return None
+        cursor = mysqlConnection.cursor()
+        cursor.execute(f'SELECT * FROM produto WHERE idproduto = {id}')
+
+        produtoEditar = cursor.fetchone()
+
+        cursor.close()
+
+        return render_template('editarProduto.html', produto = produtoEditar)
+    
+    elif request.method == 'POST':
+        nome = request.form['pnome']
+        marca = request.form['pmarca']
+        qtd = request.form['pqtd']
+        valor = request.form['pvalor']
+
+        cursor = mysqlConnection.cursor()
+        cursor.execute(f'''UPDATE produto
+                           SET nome_produto = '{nome}', marca = '{marca}',
+                               valor = {valor}, qtd = {qtd}
+                           WHERE idproduto = {id}; ''')
+        
+        mysqlConnection.commit()
+        cursor.close()
+        return redirect(url_for('home'))
 
 @app.route('/', methods = ['GET', 'POST'])
 def login():
