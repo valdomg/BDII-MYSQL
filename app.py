@@ -84,7 +84,7 @@ def login():
 
         if user:
             session['username'] = usuario
-            return redirect('/listar')
+            return redirect('/home')
         else:
             return 'Login inválido'
     
@@ -108,7 +108,7 @@ def loginAdm():
         if userAdm:
             session['nomeAdm'] = emailAdm
             #Provisório, é pra ir numa page separada
-            return redirect('/listar')
+            return redirect('/home')
         else:
             return 'Login Inválido'
 
