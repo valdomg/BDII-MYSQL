@@ -4,26 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PÁGINA HOME</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css') }}">
 </head>
 <body>
-    <div class="jumbotron text-center">
-        <button><a href="{{ url_for('login' ) }}">LOGIN</a></button>
-    </div>
+
+    <a href="{{ url_for('login' ) }}"><button type="button" class="btn btn-primary">LOGIN</button></a>
     
-    <div class="container text-center">
-        <div class="row">
-          <div class="col">
-            Column
-          </div>
-          <div class="col">
-            Column
-          </div>
-          <div class="col">
-            Column
-          </div>
-        </div>
-      </div>
+    <script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
 
 </body>
 </html>
